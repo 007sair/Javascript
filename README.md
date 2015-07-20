@@ -7,3 +7,7 @@
 - href.html
 	
 	获取url上所有信息的函数
+
+- console.log.js
+    
+    console.log的兼容写法
