@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection"content="telephone=no, email=no" />
+<title>Examples</title>
+<link rel="stylesheet" href="">
+</head>
+<body>
+<script>
+var device = identifyUA();
+switch (device){
+	case "ios":
+	document.location.href = 'https://itunes.apple.com/cn/app/mi-ya-bao-bei-zhong-guo-zui/id973366293?mt=8'
+	break;
+	case "android":
+	document.location.href = "http://download.miyabaobei.com/Miababy_localhost_V3.5.0.apk"
+	break;
+	default:
+}
+console.log(device)
+function identifyUA() {
+    var userAgent = navigator.userAgent.toLowerCase();
+    var platform ='';
+    if(userAgent == null || userAgent == ''){
+        platform = 'web' ;
+    }else{
+        if(userAgent.indexOf("android") != -1 ){
+            platform = 'android';
+        }else if(userAgent.indexOf("ios") != -1 || userAgent.indexOf("iphone") != -1){
+            platform = 'ios';
+        }else if(userAgent.indexOf("ipad") != -1) {
+            platform = 'ios';
+        }else if(userAgent.indexOf("windows phone") != -1 ){
+            platform = 'windowsphone';
+        }else{
+            platform = 'web';
+        }
+    }
+    return platform;
+}
+</script>
+</body>
+</html>
