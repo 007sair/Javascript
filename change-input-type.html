@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection"content="telephone=no, email=no" />
+<title>Examples</title>
+<link rel="stylesheet" href="">
+</head>
+<body>
+    <input type="text" id="btn" value="aaa">
+    <script>
+    function changeType(obj, type, value) {
+    	var oTmp = obj.cloneNode(true);
+    	oTmp.type = type;
+    	oTmp.value = value;
+    	obj.parentNode.replaceChild(oTmp, obj);
+    }
+    window.onload = function() {
+    	var oT = document.getElementById('btn');
+    	oT.onclick = function() {
+    		this.value = '123'
+    		changeType(oT, 'button', this.value);
+    	};
+    };
+    </script>
+</body>
+</html>
