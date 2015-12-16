@@ -84,3 +84,5 @@ function runDesign(key){
 		});
 	}
 }
+
+var miatimer = 1;
