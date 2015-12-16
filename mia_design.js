@@ -1,6 +1,6 @@
-function runDesign(key){
+function runDesign(key, arr){
 	var key = key || 0;
-	var arr_gh = [
+	var arr_gh = arr || [
 		['477', '502', '377', '370', '36', '542'],
 		['237', '232', '230', '507'],
 		['414', '449', '476', '509', '86', '47'],
@@ -49,40 +49,34 @@ function runDesign(key){
 		new_tr = [];
 	};
 
-	if (key){
-		$('#catlistb tr').not("#nav").not('.blank').not(':hidden').each(function () {
-			count++;
-			$(this).find('td').eq(0).text(count);
-		});
-
-	}else{
-		var shortArr = totalArr.map(function (item) {
+	var shortArr = totalArr.map(function (item) {
 			return { num: item.find('td').eq(1).text(), timer: +item.find('td').last().text() }
 
-		}).sort(function (a, b) {
-			if (a.timer > b.timer) {
-				return -1;
-			}
-			if (a.timer < b.timer) {
-				return 1;
-			}
-			if (a.timer = b.timer) {
-				return 0;
-			}
-		}).map(function (c) {
-			return c.num;
-		});
-		$('#catlistb #nav').find('th').eq(0).after('<th>加班</th>');
-		$('#catlistb tr').not("#nav").not('.blank').not(':hidden').each(function () {
-			count++;
-			// $(this).find('td').eq(0).text(count);
-			var index = shortArr.indexOf($(this).find('td').eq(1).text()) + 1;
-			$(this).find('td').eq(0).after('<td>' + index + '</td>')
-		});
-		$('#catlistb').css('overflow', 'hidden').find('th').each(function(index, el) {
-			$(this).removeAttr('width');	
-		});
-	}
+	}).sort(function (a, b) {
+		if (a.timer > b.timer) {
+			return -1;
+		}
+		if (a.timer < b.timer) {
+			return 1;
+		}
+		if (a.timer == b.timer) {
+			return 0;
+		}
+	}).map(function (c) {
+		return c.num;
+	});
+	$('#catlistb #nav').find('th').eq(0).text('公司').after('<th>部门</th>');
+	$('#catlistb tr').not("#nav").not('.blank').not(':hidden').each(function () {
+		count++;
+		// $(this).find('td').eq(0).text(count);
+		var index = shortArr.indexOf($(this).find('td').eq(1).text()) + 1;
+		if (key) {
+			$(this).find('td').eq(0).after('<td>' + count + '</td>');
+		}else{
+			$(this).find('td').eq(0).after('<td>' + index + '</td>');	
+		}
+	});
+	$('#catlistb').css('overflow', 'hidden').find('th').each(function(index, el) {
+		$(this).removeAttr('width');	
+	});
 }
-
-var miatimer = 1;
