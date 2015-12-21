@@ -1,6 +1,6 @@
-function runDesign(key, arr){
+function runDesign(key, arr_title, arr_num){
 	var key = key || 0;
-	var arr_gh = arr || [
+	var arr_gh = arr_num || [
 		['477', '502', '377', '370', '36', '542'],
 		['237', '232', '230', '507'],
 		['414', '449', '476', '509', '86', '47'],
@@ -10,7 +10,7 @@ function runDesign(key, arr){
 		['188'],
 		['205', '166', '399', '323', '560', '567']
 	];
-	var arr_title = [
+	var arr_title = arr_title || [
 		'UI设计组（6人）',
 		'市场设计组（4人）',
 		'运营设计组（6人）',
