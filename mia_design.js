@@ -3,60 +3,116 @@ runDesign(function(key, arr) {
 	var key = key || 0;
 	var arr_staff = arr || [{
 			tit: 'UI设计组（6人）',
-			num: ['477', '502', '377', '370', '36', '542']
+			num: ['477', '502', '377', '370', '36', '542'],
+			group: 'nontech'
 		}, {
 			tit: '市场设计组（4人）',
-			num: ['237', '232', '230', '507']
+			num: ['237', '232', '230', '507'],
+			group: 'nontech'
 		}, {
 			tit: '运营设计组（6人）',
-			num: ['414', '449', '476', '509', '86', '47']
+			num: ['414', '449', '476', '509', '86', '47'],
+			group: 'nontech'
 		}, {
 			tit: '品类一组（7人）',
-			num: ['97', '99', '516', '240', '82', '339', '514']
+			num: ['97', '99', '516', '240', '82', '339', '514'],
+			group: 'nontech'
 		}, {
 			tit: '品类二组（7人）',
-			num: ['291', '316', '344', '252', '61', '257', '175']
+			num: ['291', '316', '344', '252', '61', '257', '175'],
+			group: 'nontech'
 		}, {
 			tit: '品类三组（5人）',
-			num: ['37', '506', '53', '321', '178']
+			num: ['37', '506', '53', '321', '178'],
+			group: 'nontech'
 		}, {
 			tit: '摄影组',
-			num: ['188']
+			num: ['188'],
+			group: 'nontech'
 		}, {
 			tit: '制作组（6人）',
-			num: ['205', '166', '399', '323', '560', '567']
+			num: ['205', '166', '399', '323', '560', '567'],
+			group: 'tech'
+		}, {
+			tit: 'leader',
+			num: ['171'],
+			group: 'other'
 		}
 	];
-	var shejiArr = ['477', '502', '377', '370', '36', '542', '337', '232', '230', '507', '414', '449', '476', '509', '86', '47', '97', '99', '516', '240', '82', '339', '514', '291', '316', '344', '252', '61', '257', '175', '37', '506', '53', '321', '178', '188', '205', '166', '399', '323', '560', '567'];
+
 	var count = 0;
 	var new_tr = [];
 	var totalArr = [];
+
+
+	var shejiArr = ['477', '502', '377', '370', '36', '542', '337', '232', '230', '507', '414', '449', '476', '509', '86', '47', '97', '99', '516', '240', '82', '339', '514', '291', '316', '344', '252', '61', '257', '175', '37', '506', '53', '321', '178', '188']
+	var zhizhuoArr = ['205', '166', '399', '323', '560', '567'];
+	var otherArr = ['171'];
+	var techArr = [],
+		nontechArr = [],
+		others = [];
+	arr_staff.forEach(function(item) {
+		if (item.group == "tech") {
+			techArr = techArr.concat(item.num);
+		}
+		if (item.group == "nontech") {
+			nontechArr = nontechArr.concat(item.num);
+		}
+		if (item.group == "other") {
+			others = others.concat(item.num);
+		}
+
+	});
+	if (nontechArr.length) {
+		shejiArr = nontechArr;
+		zhizhuoArr = techArr;
+		otherArr = others;
+	}
+	var zhizhuooverTime = 0;
 	var shejioverTime = 0;
+	var otherverTime = 0;
 	var totalNum = $('#catlistb tr').not("#nav").not("#total_list").length;
 	var totaloverTime = +$('#total_list').find('td').last().text();
+	// 获取制作部的加班总时间
+	$('#catlistb tr').not("#nav").not("#total_list").filter(function() {
+		var overtime = +$(this).find('td').last().text();
+		var user = $(this).find('td').eq(1).text();
+		if (zhizhuoArr.indexOf(user) != -1) {
+			zhizhuooverTime += overtime;
+		}
+	})
+	//获取设计部的加班总时间
 	$('#catlistb tr').not("#nav").not("#total_list").filter(function() {
 		var overtime = +$(this).find('td').last().text();
 		var user = $(this).find('td').eq(1).text();
 		if (shejiArr.indexOf(user) != -1) {
-
 			shejioverTime += overtime;
 		}
 	})
-
-
+	//摄影组的加班时间
+	$('#catlistb tr').not("#nav").not("#total_list").filter(function() {
+		var overtime = +$(this).find('td').last().text();
+		var user = $(this).find('td').eq(1).text();
+		if (otherArr.indexOf(user) != -1) {
+			otherverTime += overtime;
+		}
+	})
 	var avg = totaloverTime / totalNum;
 	if (key == 2) {
 		var bumen = +$('#department').val();
 		if (bumen == 1) {
 			//技术部;
-			console.log("技术部平均加班" + avg);
-			console.log("技术部(排除设计部)平均加班为:" + (totaloverTime - shejioverTime) / (totalNum - shejiArr.length));
-			console.log("设计部平均加班为:" + shejioverTime / shejiArr.length);
+			console.log("排除制作组平均加班:" + (totaloverTime - zhizhuooverTime) / (totalNum - zhizhuoArr.length));
 		}
 		if (bumen == -1) {
 			//非技术部;
-			console.log("非技术部平均加班为:" + avg);
+			console.log("排除设计平均加班:" + (totaloverTime - shejioverTime) / (totalNum - shejiArr.length));
 		}
+		if (bumen == 0) {
+			console.log("全员平均加班" + (shejioverTime + otherverTime + zhizhuooverTime) / (shejiArr.length + otherArr.length + zhizhuoArr.length));
+		}
+
+
 
 	} else {
 		$('#catlistb tr').not("#nav").hide();
