@@ -102,14 +102,15 @@ runDesign(function(key, arr) {
 		var bumen = +$('#department').val();
 		if (bumen == 1) {
 			//技术部;
-			console.log("排除制作组平均加班:" + (totaloverTime - zhizhuooverTime) / (totalNum - zhizhuoArr.length));
+			console.log("排除制作组的技术平均加班:" + (totaloverTime - zhizhuooverTime) / (totalNum - zhizhuoArr.length));
 		}
 		if (bumen == -1) {
 			//非技术部;
-			console.log("排除设计平均加班:" + (totaloverTime - shejioverTime) / (totalNum - shejiArr.length));
+			console.log("排除设计的非技术平均加班:" + (totaloverTime - shejioverTime) / (totalNum - shejiArr.length));
 		}
 		if (bumen == 0) {
-			console.log("全员平均加班" + (shejioverTime + otherverTime + zhizhuooverTime) / (shejiArr.length + otherArr.length + zhizhuoArr.length));
+			//设计总
+			console.log("全设计的平均加班" + (shejioverTime + otherverTime + zhizhuooverTime) / (shejiArr.length + otherArr.length + zhizhuoArr.length));
 		}
 
 
