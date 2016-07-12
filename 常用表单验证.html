@@ -76,7 +76,7 @@ function checkStr(str) {
  * 返 回:true 或 flase; true表示包含汉字
  */
 function checkChinese(str) {
-	if (escape(str).indexOf(“ % u”) != -1) {
+	if (escape(str).indexOf(" % u ") != -1) {
 		return true;
 	} else {
 		return false;
@@ -186,11 +186,10 @@ function checkURL(str) {
  * 主要用于注册信息的时候验证
  */
 function checkQuote(str) {
-	var items = new Array(“~”, “`”, “!”, “@”, “#”, “$”, “ % ”, “ ^ ”, “ & ”, “ * ”, “ {“, “
-	}”, “ [", "]“, “ (“, “)”);
-	items.push(“: ”, “;”, “‘”, “ | ”, “\\”, “ < ”, “ > ”, “ ? ”, “/”, “<<”, “>>”, “||”, “/ / ”);
-	items.push(“admin”, “administrators”, “administrator”, “管理员”, “系统管理员”);
-	items.push(“select”, “delete”, “update”, “insert”, “create”, “drop”, “alter”, “trancate”);
+	var items = new Array("~", "`", "!", "@", "#", "$", " % ", " ^ ", " & ", " * ", " {", "	}", " [", "]", " (", ")");
+	items.push(": ", ";", "'", " | ", "\\", " < ", " > ", " ? ", "/", "<<", ">>", "||", "/ / ");
+	items.push("admin", "administrators", "administrator", "管理员", "系统管理员");
+	items.push("select", "delete", "update", "insert", "create", "drop", "alter", "trancate");
 	str = str.toLowerCase();
 	for (var i = 0; i < items.length; i++) {
 		if (str.indexOf(items[i]) >= 0) {
@@ -217,7 +216,8 @@ function checkDate(str) {
 	if (value == null) {
 		return false;
 	} else {
-		var date = new Date(value[1], value[3]– 1, value[4]);
+		var v2 = value[3] - 1;
+		var date = new Date(value[1], v2, value[4]);
 		return (date.getFullYear() == value[1] && (date.getMonth() + 1) == value[3] && date.getDate() == value[4]);
 	}
 }
@@ -286,12 +286,12 @@ var Wi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1]; // 加权因�
 var ValideCode = [1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2]; // 身份证验证位值.10代表X
 
 function IdCardValidate(idCard) {
-	idCard = trim(idCard.replace(/ /g, “”));
+	idCard = trim(idCard.replace(/ /g, ""));
 	if (idCard.length == 15) {
 		return isValidityBrithBy15IdCard(idCard);
 	} else
 	if (idCard.length == 18) {
-		var a_idCard = idCard.split(“”); // 得到身份证数组
+		var a_idCard = idCard.split(""); // 得到身份证数组
 		if (isValidityBrithBy18IdCard(idCard) && isTrueValidateCodeBy18IdCard(a_idCard)) {
 			return true;
 		} else {
@@ -310,7 +310,7 @@ function IdCardValidate(idCard) {
  */
 function isTrueValidateCodeBy18IdCard(a_idCard) {
 	var sum = 0; // 声明加权求和变量
-	if (a_idCard[17].toLowerCase() == ‘x’) {
+	if (a_idCard[17].toLowerCase() == 'x') {
 		a_idCard[17] = 10; // 将最后位为x的验证码替换为10方便后续操作
 	}
 	for (var i = 0; i < 17; i++) {
@@ -328,22 +328,22 @@ function isTrueValidateCodeBy18IdCard(a_idCard) {
 /**
  * 通过身份证判断是男是女
  * @param idCard 15/18位身份证号码
- * @return ‘female’- 女、’male’-男
+ * @return 'female'- 女、'male'-男
  */
 function maleOrFemalByIdCard(idCard) {
-	idCard = trim(idCard.replace(/ /g, “”)); // 对身份证号码做处理。包括字符间有空格。
+	idCard = trim(idCard.replace(/ /g, "")); // 对身份证号码做处理。包括字符间有空格。
 	if (idCard.length == 15) {
 		if (idCard.substring(14, 15) % 2 == 0) {
-			return‘ female’;
+			return' female';
 		} else {
-			return‘ male’;
+			return' male';
 		}
 	} else
 	if (idCard.length == 18) {
 		if (idCard.substring(14, 17) % 2 == 0) {
-			return‘ female’;
+			return' female';
 		} else {
-			return‘ male’;
+			return' male';
 		}
 	} else {
 		return null;
@@ -360,10 +360,10 @@ function isValidityBrithBy18IdCard(idCard18) {
 	var year = idCard18.substring(6, 10);
 	var month = idCard18.substring(10, 12);
 	var day = idCard18.substring(12, 14);
-	var temp_date = new Date(year, parseFloat(month)– 1, parseFloat(day));
+	var temp_date = new Date(year, parseFloat(month-1), parseFloat(day));
 	// 这里用getFullYear()获取年份，避免千年虫问题
 	if (temp_date.getFullYear() != parseFloat(year) ||
-		temp_date.getMonth() != parseFloat(month)– 1 ||
+		temp_date.getMonth() != pm ||
 		temp_date.getDate() != parseFloat(day)) {
 		return false;
 	} else {
@@ -381,10 +381,10 @@ function isValidityBrithBy15IdCard(idCard15) {
 	var year = idCard15.substring(6, 8);
 	var month = idCard15.substring(8, 10);
 	var day = idCard15.substring(10, 12);
-	var temp_date = new Date(year, parseFloat(month)– 1, parseFloat(day));
+	var temp_date = new Date(year, parseFloat(month-1), parseFloat(day) );
 	// 对于老身份证中的你年龄则不需考虑千年虫问题而使用getYear()方法
 	if (temp_date.getYear() != parseFloat(year) ||
-		temp_date.getMonth() != parseFloat(month)– 1 ||
+		temp_date.getMonth() != pm ||
 		temp_date.getDate() != parseFloat(day)) {
 		return false;
 	} else {
@@ -395,7 +395,7 @@ function isValidityBrithBy15IdCard(idCard15) {
 
 //去掉字符串头尾空格
 function trim(str) {
-	return str.replace(/(^\s*)|(\s*$)/g, “”);
+	return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 
 

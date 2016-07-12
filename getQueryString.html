@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="">
 </head>
 <body>
-
+<h1>open console</h1>
 <script>
 /**
  * getQueryStr 获取url参数
@@ -21,11 +21,12 @@
  */
 function getQueryStr(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	var r = window.location.search.substr(1).match(reg);
+	var search = '?id=value' // http://www.mia.com/?id=value -> ?id=value
+	var r = search.substr(1).match(reg);
 	if (r != null) return unescape(r[2]);
 	return null;
 }
-// console.log(getQueryStr('id'))
+console.log(getQueryStr('id'))
 
 /**
  * UrlSearch 基本分割法获取url参数
@@ -36,7 +37,8 @@ function getQueryStr(name) {
 function UrlSearch() {
 	var o = {};
 	var name, value;
-	var str = location.href; //取得整个地址栏
+	// var str = location.href; //取得整个地址栏
+	var str = 'http://www.mia.com/?id=value'; //取得整个地址栏
 	var num = str.indexOf("?");
 	str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
 
@@ -51,7 +53,7 @@ function UrlSearch() {
 	}
 	return o;
 }
-// console.log(UrlSearch().id)
+console.log(UrlSearch().id)
 
 
 </script>
